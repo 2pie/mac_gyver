@@ -1,13 +1,18 @@
 import pygame
+import csv
 
 pygame.init()
 
 ########################## Set up the game
  
-win_width = 500
-win_height = 500
+win_width = 600
+win_height = 600
+# n_sprites = 15
+# sprite_width = win_height/n_sprites
+# sprite_width = win_width/n_sprites
+
 win = pygame.display.set_mode((win_width, win_height))
-pygame.display.set_caption("Toy")
+pygame.display.set_caption("Help MacGyver Escape!")
 clock = 100                                     # clock of the game, in millisecond
 
 ########################## Create objects
@@ -31,7 +36,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.vel = 5
+        self.vel = 8
 
         # Set move vector
         self.change_x = 0
@@ -86,16 +91,39 @@ class Block(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
-########################## Set up the game
+########################## Create instances
 
 all_list = pygame.sprite.Group()
 block_list = pygame.sprite.Group()
 
-block = Block(60, 60, 10, 60)
-block_list.add(block)
-all_list.add(block)
 
-mg = Player(0, 0, 10, 10)
+# Walls
+with open('blocks.csv') as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=',')
+    for row in csv_reader:
+        print(row[0])
+        print(row)
+        print(type(row[3]))
+        block = Block(int(row[1]), int(row[0]), int(row[2]), int(row[3]))
+        block_list.add(block)
+        all_list.add(block)
+
+# Border of the labyrinth
+block_l = Block(0, 0, 0, 600)
+block_u = Block(0, 0, 600, 0)
+block_d = Block(0, 600, 600, 0)
+block_r = Block(600, 0, 600, 0)
+all_list.add(block_l)
+all_list.add(block_u)
+all_list.add(block_d)
+all_list.add(block_r)
+block_list.add(block_l)
+block_list.add(block_u)
+block_list.add(block_d)
+block_list.add(block_r)
+
+# Player
+mg = Player(0, 0, 40, 40)
 mg.walls = block_list
 all_list.add(mg)
 
