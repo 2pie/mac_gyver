@@ -41,3 +41,6 @@ https://www.youtube.com/watch?v=xfnRywBv5VM
 Simplifier le keydown/keyup? juste bouger si keydown ?
 Image pour layrinthe
 sons etc.
+Clean code (border block, etc.)
+python3: parenthesis apres print ?
+changer le type des méthode et propriété
