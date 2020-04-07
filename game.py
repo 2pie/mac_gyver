@@ -16,6 +16,12 @@ sprite_width = win_width/n_sprites
 win = pygame.display.set_mode((win_width, win_height))
 pygame.display.set_caption("Help MacGyver Escape!")
 clock = 100 # clock of the game, in millisecond
+
+# import walls data
+wall_data = csv.reader(open('blocks.csv'), delimiter = ',')
+wall_data = list(wall_data)
+
+# import pictures
 wall_pic = pygame.image.load('ressource/wall_tile.png')
 guard_pic = pygame.image.load('ressource/Gardien.png')
 mg_pic = pygame.image.load('ressource/MacGyver.png')
@@ -114,16 +120,13 @@ class Block(pygame.sprite.Sprite):
 
 class Item(pygame.sprite.Sprite):
     
-    def __init__(self, color = (0, 255, 0)):
+    def __init__(self, other_blocks, color = (0, 255, 0)):
         pygame.sprite.Sprite.__init__(self)
 
-        xy_wall = []
-        csv_reader = csv.reader(open('blocks.csv'), delimiter = ',')
-        for row in csv_reader:
-            xy_wall.append((int(row[0]), int(row[1])))
+        xy_wall = [(int(row[0]), int(row[1])) for row in wall_data]
 
-        while True:
         # generate item position
+        while True:
             x_item = random.randint(0, n_sprites - 1)
             x_item = x_item * sprite_width
             y_item = random.randint(0, n_sprites - 1)
@@ -155,9 +158,8 @@ item_list = pygame.sprite.Group()
 
 
 # Walls
-csv_reader = csv.reader(open('blocks.csv'), delimiter = ',')
-for row in csv_reader:
-    block = Block(int(row[0]), int(row[1]), int(row[2]), int(row[3]), pic = wall_pic)
+for row in wall_data:
+    block = Block(int(row[0]), int(row[1]), sprite_width, sprite_height, pic = wall_pic)
     wall_list.add(block)
     all_list.add(block)
 
@@ -172,16 +174,20 @@ for border in (border_l, border_u, border_d, border_r):
 
 
 # Guardian
-guard = Block(280, 0, pic = guard_pic)
+x_guard = 280
+y_guard = 0
+guard = Block(x_guard, y_guard, pic = guard_pic)
 all_list.add(guard)
 guard_list.add(guard) # need to have a list for spritecollide
 
 # Items
 n = 1
+occupied_space = [wall_data, (x_guard, y_guard, sprite_width, sprite_height)]
 while n <= n_item:
-    item = Item((0, 255, 255))
+    item = Item(wall_data, color = (0, 255, 255))
     all_list.add(item)
     item_list.add(item)
+    occupied_space.append((item.rect.x, item.rect.y, sprite_width, sprite_height))
     n += 1
 
 # Player
