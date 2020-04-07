@@ -1,2 +1,11 @@
 .vscode/settings.json
 try.py
+design_labyrinth/blocks
+design_labyrinth/design_labyrinth.csv
+design_labyrinth/design_labyrinth_num.ods
+design_labyrinth/design_labyrinth.ods
+design_labyrinth/code_design_labyrinth.R
+.~lock.design_labyrinth.csv#
+design_labyrinth/.Rhistory
+design_labyrinth/blocks.csv
+design_labyrinth/blocks.json
