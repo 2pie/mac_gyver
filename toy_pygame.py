@@ -9,10 +9,9 @@ pygame.init()
 win_width = 600
 win_height = 600
 n_item = 3
-# A AJOUTER !!!!
-# n_sprites = 15
-# sprite_width = win_height/n_sprites
-# sprite_width = win_width/n_sprites
+n_sprites = 15
+sprite_height = win_height/n_sprites
+sprite_width = win_width/n_sprites
 
 win = pygame.display.set_mode((win_width, win_height))
 pygame.display.set_caption("Help MacGyver Escape!")
@@ -22,7 +21,7 @@ clock = 100 # clock of the game, in millisecond
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, x, y, width, height):
+    def __init__(self, x, y, width = sprite_width, height = sprite_height):
         
         # Call the parent class (Sprite) constructor
         pygame.sprite.Sprite.__init__(self)
@@ -39,7 +38,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.vel = 10
+        self.vel = 10 # velocity should not exceed 10, otherwise not enough precision
 
         # Set move vector
         self.change_x = 0
@@ -102,7 +101,7 @@ class Player(pygame.sprite.Sprite):
             
 class Block(pygame.sprite.Sprite):
 
-    def __init__(self, x, y, width, height, color = (0, 255, 0)):
+    def __init__(self, x, y, width = sprite_width, height = sprite_height, color = (0, 255, 0)):
 
         # Call the parent class
         pygame.sprite.Sprite.__init__(self)
@@ -124,10 +123,10 @@ class Item(pygame.sprite.Sprite):
 
         while True:
         # generate item position
-            x_item = random.randint(0, 14)
-            x_item = x_item * 40
-            y_item = random.randint(0, 14)
-            y_item = y_item * 40
+            x_item = random.randint(0, n_sprites - 1)
+            x_item = x_item * sprite_width
+            y_item = random.randint(0, n_sprites - 1)
+            y_item = y_item * sprite_height
             xy_item = (x_item, y_item)
 
             # check if not in a wall
@@ -138,9 +137,7 @@ class Item(pygame.sprite.Sprite):
             if match == False:
                 break
 
-        width = 40
-        height = 40
-        self.image = pygame.Surface([width, height])
+        self.image = pygame.Surface([sprite_width, sprite_height])
         self.image.fill(color)
         self.rect = self.image.get_rect()
         self.rect.x = x_item
@@ -157,33 +154,28 @@ item_list = pygame.sprite.Group()
 
 
 # Walls
-with open('blocks.csv') as csv_file: # REMOVE
-    csv_reader = csv.reader(csv_file, delimiter = ',')
-    for row in csv_reader:
-        block = Block(int(row[0]), int(row[1]), int(row[2]), int(row[3]))
-        wall_list.add(block)
-        all_list.add(block)
+csv_reader = csv.reader(open('blocks.csv'), delimiter = ',')
+for row in csv_reader:
+    block = Block(int(row[0]), int(row[1]), int(row[2]), int(row[3]))
+    wall_list.add(block)
+    all_list.add(block)
 
-# Border of the labyrinth
-block_l = Block(0, 0, 0, 600)
-block_u = Block(0, 0, 600, 0)
-block_d = Block(0, 600, 600, 0)
-block_r = Block(600, 0, 0, 600)
-all_list.add(block_l)
-all_list.add(block_u)
-all_list.add(block_d)
-all_list.add(block_r)
-wall_list.add(block_l)
-wall_list.add(block_u)
-wall_list.add(block_d)
-wall_list.add(block_r)
+# Borders of the screen
+border_l = Block(0, 0, 0, 600)
+border_u = Block(0, 0, 600, 0)
+border_d = Block(0, 600, 600, 0)
+border_r = Block(600, 0, 0, 600)
+for border in (border_l, border_u, border_d, border_r):
+    all_list.add(border)
+    wall_list.add(border)
+
 
 # Guardian
-guard = Block(280, 0, 40, 40, (0, 0, 255))
+guard = Block(280, 0, color = (0, 0, 255))
 all_list.add(guard)
 guard_list.add(guard) # need to have a list for spritecollide
 
-# Items METTRE EN CLASSE ?
+# Items
 n = 1
 while n <= n_item:
     item = Item((0, 255, 255))
@@ -192,7 +184,7 @@ while n <= n_item:
     n += 1
 
 # Player
-mg = Player(280, 560, 40, 40)
+mg = Player(280, 560)
 mg.walls = wall_list
 mg.guard = guard_list
 mg.item = item_list
