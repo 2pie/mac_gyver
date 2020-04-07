@@ -9,6 +9,7 @@ pygame.init()
 win_width = 600
 win_height = 600
 n_item = 3
+# A AJOUTER !!!!
 # n_sprites = 15
 # sprite_width = win_height/n_sprites
 # sprite_width = win_width/n_sprites
@@ -111,6 +112,40 @@ class Block(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
+class Item(pygame.sprite.Sprite):
+    
+    def __init__(self, color = (0, 255, 0)):
+        pygame.sprite.Sprite.__init__(self)
+
+        xy_wall = []
+        csv_reader = csv.reader(open('blocks.csv'), delimiter = ',')
+        for row in csv_reader:
+            xy_wall.append((int(row[0]), int(row[1])))
+
+        while True:
+        # generate item position
+            x_item = random.randint(0, 14)
+            x_item = x_item * 40
+            y_item = random.randint(0, 14)
+            y_item = y_item * 40
+            xy_item = (x_item, y_item)
+
+            # check if not in a wall
+            match = False
+            for wall in xy_wall:
+                if xy_item == wall:
+                    match = True
+            if match == False:
+                break
+
+        width = 40
+        height = 40
+        self.image = pygame.Surface([width, height])
+        self.image.fill(color)
+        self.rect = self.image.get_rect()
+        self.rect.x = x_item
+        self.rect.y = y_item
+
 
 
 ########################## Create instances
@@ -150,32 +185,11 @@ guard_list.add(guard) # need to have a list for spritecollide
 
 # Items METTRE EN CLASSE ?
 n = 1
-xy_wall = []
-csv_reader = csv.reader(open('blocks.csv'), delimiter = ',')
-for row in csv_reader:
-    xy_wall.append((int(row[0]), int(row[1])))
-
 while n <= n_item:
-    # generate item position
-    x_item = random.randint(0, 14)
-    x_item = x_item * 40
-    y_item = random.randint(0, 14)
-    y_item = y_item * 40
-    xy_item = (x_item, y_item)
-
-    # check if not in a wall
-    match = False
-    for wall in xy_wall:
-        if xy_item == wall:
-            match = True
-    
-    # if not, create the item instance
-    if match == False:
-        # everythin good, add item and next
-        item = Block(xy_item[0], xy_item[1], 40, 40, (0, 255, 255))
-        all_list.add(item)
-        item_list.add(item)
-        n += 1
+    item = Item((0, 255, 255))
+    all_list.add(item)
+    item_list.add(item)
+    n += 1
 
 # Player
 mg = Player(280, 560, 40, 40)
