@@ -16,31 +16,27 @@ sprite_width = win_width/n_sprites
 win = pygame.display.set_mode((win_width, win_height))
 pygame.display.set_caption("Help MacGyver Escape!")
 clock = 100 # clock of the game, in millisecond
+wall_pic = pygame.image.load('ressource/wall_tile.png')
+guard_pic = pygame.image.load('ressource/Gardien.png')
+mg_pic = pygame.image.load('ressource/MacGyver.png')
+
 
 ########################## Define classes
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, x, y, width = sprite_width, height = sprite_height):
+    def __init__(self, x, y, width = sprite_width, height = sprite_height, pic = mg_pic):
         
         # Call the parent class (Sprite) constructor
         pygame.sprite.Sprite.__init__(self)
  
-        # Create an image of the block, and fill it with a color.
-        # This could also be an image loaded from the disk.
-        self.image = pygame.Surface([width, height])
-        self.image.fill((255, 0, 0))
- 
-        # Fetch the rectangle object that has the dimensions of the image
-        # image.
-        # Update the position of this object by setting the values
-        # of rect.x and rect.y
+        self.image = pic
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
         self.vel = 10 # velocity should not exceed 10, otherwise not enough precision
 
-        # Set move vector
+        # attributes variables
         self.change_x = 0
         self.change_y = 0
         self.walls = None
@@ -101,15 +97,20 @@ class Player(pygame.sprite.Sprite):
             
 class Block(pygame.sprite.Sprite):
 
-    def __init__(self, x, y, width = sprite_width, height = sprite_height, color = (0, 255, 0)):
+    def __init__(self, x, y, width = sprite_width, height = sprite_height, pic = wall_pic, border = False):
 
         # Call the parent class
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface([width, height])
-        self.image.fill(color)
+        self.image = pic
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+
+        if border == True:
+            self.image = pygame.Surface([width, height])
+            self.rect = self.image.get_rect()
+            self.rect.x = x
+            self.rect.y = y
 
 class Item(pygame.sprite.Sprite):
     
@@ -156,22 +157,22 @@ item_list = pygame.sprite.Group()
 # Walls
 csv_reader = csv.reader(open('blocks.csv'), delimiter = ',')
 for row in csv_reader:
-    block = Block(int(row[0]), int(row[1]), int(row[2]), int(row[3]))
+    block = Block(int(row[0]), int(row[1]), int(row[2]), int(row[3]), pic = wall_pic)
     wall_list.add(block)
     all_list.add(block)
 
 # Borders of the screen
-border_l = Block(0, 0, 0, 600)
-border_u = Block(0, 0, 600, 0)
-border_d = Block(0, 600, 600, 0)
-border_r = Block(600, 0, 0, 600)
+border_l = Block(0, 0, 0, 600, border = True)
+border_u = Block(0, 0, 600, 0, border = True)
+border_d = Block(0, 600, 600, 0, border = True)
+border_r = Block(600, 0, 0, 600, border = True)
 for border in (border_l, border_u, border_d, border_r):
     all_list.add(border)
     wall_list.add(border)
 
 
 # Guardian
-guard = Block(280, 0, color = (0, 0, 255))
+guard = Block(280, 0, pic = guard_pic)
 all_list.add(guard)
 guard_list.add(guard) # need to have a list for spritecollide
 
@@ -184,7 +185,7 @@ while n <= n_item:
     n += 1
 
 # Player
-mg = Player(280, 560)
+mg = Player(280, 560, pic = mg_pic)
 mg.walls = wall_list
 mg.guard = guard_list
 mg.item = item_list
@@ -237,7 +238,7 @@ while run:
     if victory:
         font = pygame.font.Font(pygame.font.get_default_font(), 36)
         text = font.render("You win !", True, (255, 255, 255))
-        win.blit(text, dest=(200,200))
+        win.blit(text, dest=(220,220))
         pygame.display.update()
         pygame.time.delay(1000)
         run = False
@@ -245,7 +246,7 @@ while run:
     if defeat:
         font = pygame.font.Font(pygame.font.get_default_font(), 36)
         text = font.render("You lose !", True, (255, 255, 255))
-        win.blit(text, dest=(200,200))
+        win.blit(text, dest=(220,220))
         pygame.display.update()
         pygame.time.delay(1000)
         run = False
