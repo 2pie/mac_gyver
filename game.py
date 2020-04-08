@@ -25,7 +25,9 @@ wall_data = list(wall_data)
 wall_pic = pygame.image.load('ressource/wall_tile.png')
 guard_pic = pygame.image.load('ressource/Gardien.png')
 mg_pic = pygame.image.load('ressource/MacGyver.png')
-
+needle_pic = pygame.image.load('ressource/aiguille2.png')
+ether_pic = pygame.image.load('ressource/ether.png')
+tube_pic = pygame.image.load('ressource/tube_plastique.png')
 
 ########################## Define classes
 
@@ -120,7 +122,7 @@ class Block(pygame.sprite.Sprite):
 
 class Item(pygame.sprite.Sprite):
     
-    def __init__(self, other_blocks, color = (0, 255, 0)):
+    def __init__(self, other_blocks, pic, color = (0, 255, 0)):
         pygame.sprite.Sprite.__init__(self)
 
         xy_wall = [(int(row[0]), int(row[1])) for row in wall_data]
@@ -141,8 +143,7 @@ class Item(pygame.sprite.Sprite):
             if match == False:
                 break
 
-        self.image = pygame.Surface([sprite_width, sprite_height])
-        self.image.fill(color)
+        self.image = pic
         self.rect = self.image.get_rect()
         self.rect.x = x_item
         self.rect.y = y_item
@@ -183,8 +184,9 @@ guard_list.add(guard) # need to have a list for spritecollide
 # Items
 n = 1
 occupied_space = [wall_data, (x_guard, y_guard, sprite_width, sprite_height)]
+item_pics = [needle_pic, ether_pic, tube_pic]
 while n <= n_item:
-    item = Item(wall_data, color = (0, 255, 255))
+    item = Item(wall_data, pic = item_pics[n-1])
     all_list.add(item)
     item_list.add(item)
     occupied_space.append((item.rect.x, item.rect.y, sprite_width, sprite_height))
