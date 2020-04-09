@@ -26,6 +26,7 @@ Since my basic sprites is 40 pixel large and high at maximum, I cropped a bit th
 
 # Classes
 
+
 # Design of the board
 The board must be 15 sprites long. I make it also 15 sprites wide to have a square. The basic sprite is based on the size of Macgyver's picture, slightly cropped to make it 40 pixel long. 
 40x15 = 600 So the screen should be 600x600 pixels, composed of a 15x15 grid of sprites of size 40x40 pixels.
