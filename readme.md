@@ -33,7 +33,7 @@ My mentor pointed out some issues with the formating and the structure of the co
 
 # Classes
 
-|Name|Méthods|Attributes|Interactions|Notes| 
+|Nom|Méthodes|Attributs|Interactions|Notes| 
 |---|---|---|---|---|
 | Player        | Init, move, update|x, y, width, height, picture, vel, change_x, change_y, walls, guard, item, score, victory, defeat|Interact with Block and Item instances in the update method||
 | Block|Init   |x, y, width, height, picture|| Fixed objects with deterministic position (walls and guardian)|
