@@ -24,6 +24,12 @@ The next step is to place the three items needed to kill the guardian. They are 
 6. Adding pictures
 Since my basic sprites is 40 pixel large and high at maximum, I cropped a bit the MacGyver picture so that it is 40 pixel high. The guardian pictures already fits in a 40x40 pixels square. I use a tile from the "floor-tiles-20x20.png" file, duplicate it four times to create a 40x40 block for the walls.
 
+7. Cleaning code and structuring code
+My mentor pointed out some issues with the formating and the structure of the code. Following this discussion I made the following changes:
+- Putting defintion of constants and classes in separate files
+- Using a linting tool to apply the PEP8 guidelines
+
+
 # Classes
 
 
@@ -35,11 +41,14 @@ The board must be 15 sprites long. I make it also 15 sprites wide to have a squa
 
 ## Starting with pygame
 https://www.youtube.com/watch?v=i6xMBig-pP4
+
 https://www.youtube.com/watch?v=2-DNswzCkqk
 
 ## Walls
 https://www.youtube.com/watch?v=1aGuhUFwvXA
+
 https://www.youtube.com/watch?v=8IRyt7ft7zg
+
 http://programarcadegames.com/python_examples/show_file.php?file=move_with_walls_example.py
 
 
@@ -48,9 +57,4 @@ https://www.youtube.com/watch?v=xfnRywBv5VM
 
 
 # Extensions
-Simplifier le keydown/keyup? juste bouger si keydown ?
 Image pour layrinthe
-sons etc.
-Clean code (border block, etc.)
-python3: parenthesis apres print ?
-changer le type des méthode et propriété

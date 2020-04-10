@@ -36,14 +36,11 @@ guard = cl.Block(
     )
 all_list.add(guard)
 guard_list.add(guard)       # need to have a list for spritecollide
-#wall_list.add(guard)       # guard is also considered as a wall
 
 # Items
 n = 1
-occupied_space = [
-    su.wall_data, 
-    (su.X_GUARD, su.Y_GUARD, su.SPR_WIDTH, su.SPR_HEIGHT)
-    ]
+occupied_space = [su.wall_data]
+occupied_space.append((su.X_GUARD, su.Y_GUARD, su.SPR_WIDTH, su.SPR_HEIGHT))
 item_pics = [su.needle_pic, su.ether_pic, su.tube_pic]
 while n <= su.N_ITEM:
     item = cl.Item(su.wall_data, pic=item_pics[n-1])
@@ -99,7 +96,13 @@ while run:
 
     # Draw
     all_list.update()
-    su.win.fill((0, 0, 0))
+
+    for i in range(0, su.N_SPRITES*2):  # because tile is only 20 px
+        i = i*su.SPR_WIDTH/2
+        for j in range(0, su.N_SPRITES*2):
+            j = j*su.SPR_HEIGHT/2
+            su.win.blit(su.floor_pic, dest=(i, j))
+
     all_list.draw(su.win)
     font = pygame.font.Font(pygame.font.get_default_font(), 24)
     text = font.render("Score = " + str(mg.score), True, (255, 255, 255))

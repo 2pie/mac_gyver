@@ -19,14 +19,15 @@ wall_data = list(wall_data)
 
 # import pictures
 wall_pic = pygame.image.load('ressource/wall_tile.png')
+floor_pic = pygame.image.load('ressource/floor_tile2.png')
 guard_pic = pygame.image.load('ressource/Gardien.png')
 mg_pic = pygame.image.load('ressource/MacGyver.png')
 needle_pic = pygame.image.load('ressource/aiguille2.png')
-ether_pic = pygame.image.load('ressource/ether.png')
-tube_pic = pygame.image.load('ressource/tube_plastique.png')
+ether_pic = pygame.image.load('ressource/ether2.png')
+tube_pic = pygame.image.load('ressource/tube_plastique2.png')
 
 # Position player and guardian
 X_GUARD = 280
 Y_GUARD = 0
 X_PLAYER = 280
-Y_PLAYER = 560
+Y_PLAYER = 160 #560

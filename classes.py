@@ -32,11 +32,12 @@ class Player(pygame.sprite.Sprite):
 
         # Move left/right
         self.rect.x += self.change_x
- 
-        # Do player hit a wall?
+        
+        # check if hit wall
         block_hit_list = pygame.sprite.spritecollide(self, self.walls, False)
+
+        # If hit wall update position
         for block in block_hit_list:
-            # set player side to the side of the wall we hit
             if self.change_x > 0:
                 self.rect.right = block.rect.left
             else:
@@ -45,8 +46,10 @@ class Player(pygame.sprite.Sprite):
         # Move up/down
         self.rect.y += self.change_y
  
-        # Do player hit a wall?
+        # check if hit wall
         block_hit_list = pygame.sprite.spritecollide(self, self.walls, False)
+
+        # If hit wall update position
         for block in block_hit_list:
             if self.change_y > 0:
                 self.rect.bottom = block.rect.top
@@ -54,7 +57,7 @@ class Player(pygame.sprite.Sprite):
                 self.rect.top = block.rect.bottom
         
         # Guardian interaction
-        guard_hit = pygame.sprite.spritecollide(self, self.guard, False)      
+        guard_hit = pygame.sprite.spritecollide(self, self.guard, False)
         if guard_hit:   # check if list is not empty
             
             if self.score == su.N_ITEM:
@@ -62,12 +65,6 @@ class Player(pygame.sprite.Sprite):
             
             if self.score < su.N_ITEM:
                 self.defeat = True
-            
-        for guard in guard_hit:
-            if self.change_x > 0:
-                self.rect.right = guard.rect.left
-            else:
-                self.rect.left = guard.rect.right
         
         # Item interaction
         item_hit = pygame.sprite.spritecollide(self, self.item, True)
