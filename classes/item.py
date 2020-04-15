@@ -4,10 +4,17 @@ import setup as su
 
 
 class Item(pygame.sprite.Sprite):
-    
-    def __init__(self, other_blocks, pic):
-        pygame.sprite.Sprite.__init__(self)
 
+    def __init__(self, other_blocks, pic):
+        '''Initialize the Item instance
+
+        Parameters:
+        other_blocks: position of the existing blocks
+        pic: picture for the item
+        '''
+
+        pygame.sprite.Sprite.__init__(self)
+        print(other_blocks)
         xy_wall = [(int(row[0]), int(row[1])) for row in other_blocks]
 
         # generate item position

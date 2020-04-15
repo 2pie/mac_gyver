@@ -1,5 +1,18 @@
 This is a small game written in python with the pygame module. Help MacGyver escape !
 
+# Installation
+
+Follow the instruction below to install the game. Make sure you have python-pip installed. Below is the command line installation for Linux.
+
+    git clone https://github.com/2pie/mac_gyver.git
+    cd mac_gyver/
+    pip install -r requirements.txt
+
+Launch the game with the following command
+
+    python game.py
+
+
 # My process
 
 1. **Starting with Python.**
@@ -34,7 +47,7 @@ My mentor pointed out some issues with the formating and the structure of the co
 # Classes
 
 |Name|Methods|Attributes|Interactions|Notes| 
-|---|---|---|---|---|
+|------|---------|---------------------|---------------------|---------------------|
 | Player        | Init, move, update|x, y, width, height, picture, vel, change_x, change_y, walls, guard, item, score, victory, defeat|Interact with Block and Item instances in the update method||
 | Block|Init   |x, y, width, height, picture|| Fixed objects with deterministic position (walls and guardian)|
 | Item|Init|other_blocks, picture|| Fixed object with random position |

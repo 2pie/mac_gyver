@@ -45,11 +45,11 @@ guard_list.add(guard)       # need to have a list for spritecollide
 
 # Items
 n = 1
-occupied_space = [su.wall_data]
+occupied_space = su.wall_data
 occupied_space.append((su.X_GUARD, su.Y_GUARD, su.SPR_WIDTH, su.SPR_HEIGHT))
 item_pics = [su.needle_pic, su.ether_pic, su.tube_pic]
 while n <= su.N_ITEM:
-    item = it.Item(su.wall_data, pic=item_pics[n-1])
+    item = it.Item(occupied_space, pic=item_pics[n-1])
     all_list.add(item)
     item_list.add(item)
     occupied_space.append(
@@ -72,7 +72,7 @@ all_list.add(mg)
 # MAIN LOOP
 
 def main():
-
+    '''Main loop of the game'''
     run = True
     while run:
         pygame.time.delay(su.CLOCK)
@@ -91,7 +91,7 @@ def main():
                     mg.move(0, -mg.vel)
                 elif event.key == pygame.K_DOWN:
                     mg.move(0, mg.vel)
-    
+
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
                     mg.move(mg.vel, 0)
