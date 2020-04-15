@@ -1,3 +1,6 @@
+#! /usr/bin/python3
+# coding: utf-8
+
 import pygame
 import setup as su
 import classes as cl

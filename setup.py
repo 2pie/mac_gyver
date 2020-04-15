@@ -1,3 +1,6 @@
+#! /usr/bin/python3
+# coding: utf-8
+
 import pygame
 import csv
 
@@ -30,4 +33,4 @@ tube_pic = pygame.image.load('ressource/tube_plastique2.png')
 X_GUARD = 280
 Y_GUARD = 0
 X_PLAYER = 280
-Y_PLAYER = 160 #560
+Y_PLAYER = 560
