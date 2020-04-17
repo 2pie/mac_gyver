@@ -10,7 +10,7 @@ Follow the instruction below to install the game. Make sure you have python-pip 
 
 Launch the game with the following command
 
-    python game.py
+    python3 game.py
 
 
 # My process
